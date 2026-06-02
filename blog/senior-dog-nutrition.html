@@ -52,17 +52,20 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="/" class="brand">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-1.5 0-3-1.5-3-3 0-1 .5-2 1.5-3S12 13 12 12s-.5-2-1.5-3S9 7 9 6c0-1.5 1.5-3 3-3s3 1.5 3 3c0 1-.5 2-1.5 3S12 11 12 12s.5 2 1.5 3 1.5 2 1.5 3c0 1.5-1.5 3-3 3z"/><circle cx="7" cy="4" r="1.5"/><circle cx="17" cy="4" r="1.5"/><circle cx="5" cy="9" r="1.5"/><circle cx="19" cy="9" r="1.5"/></svg>
-            PetFeedCalc
-        </a>
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/tools/dog-food-calculator.html">Dog Food Calculator</a></li>
-            <li><a href="/tools/cat-food-calculator.html">Cat Food Calculator</a></li>
-            <li><a href="/tools/pet-bmi-calculator.html">Pet BMI Calculator</a></li>
-            <li><a href="/blog/how-much-to-feed-puppy.html">Blog</a></li>
-        </ul>
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-1.5 0-3-1.5-3-3 0-1 .5-2 1.5-3S12 13 12 12s-.5-2-1.5-3S9 7 9 6c0-1.5 1.5-3 3-3s3 1.5 3 3c0 1-.5 2-1.5 3S12 11 12 12s.5 2 1.5 3 1.5 2 1.5 3c0 1.5-1.5 3-3 3z"/><circle cx="7" cy="4" r="1.5"/><circle cx="17" cy="4" r="1.5"/><circle cx="5" cy="9" r="1.5"/><circle cx="19" cy="9" r="1.5"/></svg>
+                PetFeedCalc
+            </a>
+            <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/tools/dog-food-calculator.html">Dog Food</a></li>
+                <li><a href="/tools/cat-food-calculator.html">Cat Food</a></li>
+                <li><a href="/tools/pet-bmi-calculator.html">Pet BMI</a></li>
+                <li><a href="/blog/how-much-to-feed-puppy.html">Blog</a></li>
+            </ul>
+        </div>
     </nav>
 
     <main class="article">
@@ -213,12 +216,15 @@
         <p>For help calculating the right portions for your senior dog's specific situation, try our <a href="/tools/dog-food-calculator.html">dog food calculator</a>. If you're also caring for a puppy in the same household, our <a href="/blog/how-much-to-feed-puppy.html">puppy feeding guide</a> covers the opposite end of the spectrum.</p>
     </main>
 
-    <footer>
-        <ul>
-            <li><a href="/about.html">About</a></li>
-            <li><a href="/contact.html">Contact</a></li>
-            <li><a href="/privacy.html">Privacy Policy</a></li>
-        </ul>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="/about.html">About</a>
+                <a href="/contact.html">Contact</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+            <p>&copy; 2026 PetFeedCalc. All rights reserved.</p>
+        </div>
     </footer>
 
     <script src="/assets/main.js"></script>
