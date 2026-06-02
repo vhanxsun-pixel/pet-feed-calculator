@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dog Food Calculator - How Much to Feed Your Dog Daily</title>
+  <meta name="description" content="Free dog food calculator. Enter your dog's weight, age, and activity level to find the perfect daily feeding amount in cups and grams.">
+  <link rel="canonical" href="https://pet-feed-calculator.pages.dev/tools/dog-food-calculator.html">
+  <meta property="og:title" content="Dog Food Calculator - Daily Feeding Amount">
+  <meta property="og:description" content="Calculate exactly how much food your dog needs per day based on weight, age, and activity level.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Dog Food Calculator",
+    "description": "Calculate your dog's daily food intake based on weight, age, and activity level",
+    "url": "https://pet-feed-calculator.pages.dev/tools/dog-food-calculator.html",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="navbar-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-1.5 0-3-1.5-3-3 0-1 .5-2 1.5-3S12 13 12 12s-.5-2-1.5-3S9 7 9 6c0-1.5 1.5-3 3-3s3 1.5 3 3c0 1-.5 2-1.5 3S12 11 12 12s.5 2 1.5 3 1.5 2 1.5 3c0 1.5-1.5 3-3 3z"/><circle cx="7" cy="4" r="1.5"/><circle cx="17" cy="4" r="1.5"/><circle cx="5" cy="9" r="1.5"/><circle cx="19" cy="9" r="1.5"/></svg>
+        PetFeedCalc
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/dog-food-calculator.html" class="active">Dog Food</a></li>
+        <li><a href="/tools/cat-food-calculator.html">Cat Food</a></li>
+        <li><a href="/tools/pet-bmi-calculator.html">Pet BMI</a></li>
+        <li><a href="/blog/how-much-to-feed-puppy.html">Blog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="calc-container">
+      <h1 style="text-align:center; margin-bottom: 0.5rem;">Dog Food Calculator</h1>
+      <p style="text-align:center; color: var(--text-muted); margin-bottom: 2rem;">Find out exactly how much food your dog needs each day</p>
+
+      <div class="calc-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="weight">Dog's Weight</label>
+            <input type="number" id="weight" placeholder="e.g. 25" min="0.5" max="120" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="weight-unit">Unit</label>
+            <select id="weight-unit">
+              <option value="lbs">lbs</option>
+              <option value="kg">kg</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="age">Life Stage</label>
+          <select id="age">
+            <option value="puppy">Puppy (under 12 months)</option>
+            <option value="adult" selected>Adult (1-7 years)</option>
+            <option value="senior">Senior (7+ years)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="activity">Activity Level</label>
+          <select id="activity">
+            <option value="low">Low (mostly indoor, short walks)</option>
+            <option value="moderate" selected>Moderate (daily walks, some play)</option>
+            <option value="high">High (running, hiking, working dog)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="neutered">Spayed/Neutered?</label>
+          <select id="neutered">
+            <option value="yes" selected>Yes</option>
+            <option value="no">No (intact)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="calories">Food Calorie Density (kcal/cup)</label>
+          <input type="number" id="calories" placeholder="e.g. 350" min="200" max="600" value="350">
+          <small style="color: var(--text-muted); display: block; margin-top: 0.25rem;">Check your dog food bag — typically 300-450 kcal/cup</small>
+        </div>
+
+        <button class="btn-calculate" onclick="calculate()">Calculate Daily Feeding</button>
+      </div>
+
+      <div class="result-box" id="result">
+        <h3>Daily Feeding Recommendation</h3>
+        <div class="result-value" id="result-cups"></div>
+        <div class="result-detail" id="result-detail"></div>
+      </div>
+
+      <div class="article" style="padding: 2rem 0;">
+        <h2>How This Calculator Works</h2>
+        <p>This calculator uses the veterinary-standard Resting Energy Requirement (RER) formula:</p>
+        <p><strong>RER = 70 × (body weight in kg)<sup>0.75</sup></strong></p>
+        <p>The RER is then multiplied by a factor based on your dog's life stage, activity level, and neutering status to determine their Maintenance Energy Requirement (MER) — the total daily calories they need.</p>
+
+        <h2>Activity Level Multipliers</h2>
+        <table>
+          <tr><th>Factor</th><th>Multiplier</th></tr>
+          <tr><td>Neutered adult, low activity</td><td>1.2 - 1.4</td></tr>
+          <tr><td>Intact adult, moderate activity</td><td>1.6 - 1.8</td></tr>
+          <tr><td>Active/working dog</td><td>2.0 - 5.0</td></tr>
+          <tr><td>Puppy (4-12 months)</td><td>2.0</td></tr>
+          <tr><td>Senior dog</td><td>1.0 - 1.2</td></tr>
+        </table>
+
+        <h2>Tips for Accurate Feeding</h2>
+        <ul>
+          <li>Use a measuring cup or kitchen scale for consistency</li>
+          <li>Split daily amount into 2 meals for adults, 3 for puppies</li>
+          <li>Monitor your dog's weight every 2-4 weeks and adjust accordingly</li>
+          <li>Treats should make up no more than 10% of daily calories</li>
+        </ul>
+
+        <h2>Related Tools</h2>
+        <ul>
+          <li><a href="/tools/puppy-feeding-guide.html">Puppy Feeding Guide</a> — Age-specific amounts for growing dogs</li>
+          <li><a href="/tools/pet-bmi-calculator.html">Pet BMI Calculator</a> — Check if your dog is at a healthy weight</li>
+          <li><a href="/tools/calorie-calculator.html">Calorie Calculator</a> — Detailed RER/MER breakdown</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy Policy</a>
+      </div>
+      <p>&copy; 2024 PetFeedCalc. All rights reserved. Consult your veterinarian for specific dietary advice.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+  <script>
+  function calculate() {
+    const weightInput = parseFloat(document.getElementById('weight').value);
+    const unit = document.getElementById('weight-unit').value;
+    const age = document.getElementById('age').value;
+    const activity = document.getElementById('activity').value;
+    const neutered = document.getElementById('neutered').value;
+    const caloriesPerCup = parseFloat(document.getElementById('calories').value) || 350;
+
+    if (!weightInput || weightInput <= 0) {
+      alert('Please enter a valid weight.');
+      return;
+    }
+
+    const weightKg = unit === 'lbs' ? weightInput * 0.453592 : weightInput;
+    const rer = 70 * Math.pow(weightKg, 0.75);
+
+    let multiplier = 1.6;
+    if (age === 'puppy') {
+      multiplier = 2.0;
+    } else if (age === 'senior') {
+      multiplier = activity === 'low' ? 1.0 : activity === 'high' ? 1.4 : 1.2;
+    } else {
+      if (neutered === 'yes') {
+        multiplier = activity === 'low' ? 1.2 : activity === 'high' ? 1.8 : 1.4;
+      } else {
+        multiplier = activity === 'low' ? 1.4 : activity === 'high' ? 2.0 : 1.6;
+      }
+    }
+
+    const dailyCal = rer * multiplier;
+    const cups = dailyCal / caloriesPerCup;
+    const grams = (dailyCal / caloriesPerCup) * 100;
+
+    const resultBox = document.getElementById('result');
+    resultBox.classList.add('show');
+    document.getElementById('result-cups').textContent = cups.toFixed(1) + ' cups/day';
+    document.getElementById('result-detail').innerHTML =
+      `<strong>${Math.round(dailyCal)} kcal/day</strong> needed<br>` +
+      `Approximately ${Math.round(grams)}g of food per day<br>` +
+      `Split into ${age === 'puppy' ? '3' : '2'} meals: ${(cups / (age === 'puppy' ? 3 : 2)).toFixed(1)} cups per meal`;
+  }
+  </script>
+</body>
+</html>

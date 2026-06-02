@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Calorie Calculator - RER & MER for Dogs and Cats</title>
+  <meta name="description" content="Calculate your pet's Resting Energy Requirement (RER) and Maintenance Energy Requirement (MER). Accurate calorie needs for dogs and cats of all life stages.">
+  <link rel="canonical" href="https://pet-feed-calculator.pages.dev/tools/calorie-calculator.html">
+  <meta property="og:title" content="Pet Calorie Calculator - RER & MER">
+  <meta property="og:description" content="Veterinary-grade calorie calculator for dogs and cats using RER/MER formulas.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pet Calorie Calculator",
+    "description": "Calculate RER and MER calorie needs for dogs and cats",
+    "url": "https://pet-feed-calculator.pages.dev/tools/calorie-calculator.html",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="navbar-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-1.5 0-3-1.5-3-3 0-1 .5-2 1.5-3S12 13 12 12s-.5-2-1.5-3S9 7 9 6c0-1.5 1.5-3 3-3s3 1.5 3 3c0 1-.5 2-1.5 3S12 11 12 12s.5 2 1.5 3 1.5 2 1.5 3c0 1.5-1.5 3-3 3z"/><circle cx="7" cy="4" r="1.5"/><circle cx="17" cy="4" r="1.5"/><circle cx="5" cy="9" r="1.5"/><circle cx="19" cy="9" r="1.5"/></svg>
+        PetFeedCalc
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/dog-food-calculator.html">Dog Food</a></li>
+        <li><a href="/tools/cat-food-calculator.html">Cat Food</a></li>
+        <li><a href="/tools/pet-bmi-calculator.html">Pet BMI</a></li>
+        <li><a href="/blog/how-much-to-feed-puppy.html">Blog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="calc-container">
+      <h1 style="text-align:center; margin-bottom: 0.5rem;">Pet Calorie Calculator</h1>
+      <p style="text-align:center; color: var(--text-muted); margin-bottom: 2rem;">Precise RER & MER calculations for your pet</p>
+
+      <div class="calc-form">
+        <div class="form-group">
+          <label for="pet-type">Pet Type</label>
+          <select id="pet-type" onchange="updateStatus()">
+            <option value="dog" selected>Dog</option>
+            <option value="cat">Cat</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="weight">Body Weight</label>
+            <input type="number" id="weight" placeholder="e.g. 30" min="0.5" max="120" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="weight-unit">Unit</label>
+            <select id="weight-unit">
+              <option value="lbs">lbs</option>
+              <option value="kg">kg</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="status">Life Stage / Status</label>
+          <select id="status">
+            <option value="neutered-adult">Neutered/Spayed Adult</option>
+            <option value="intact-adult">Intact Adult</option>
+            <option value="inactive">Inactive / Obesity-Prone</option>
+            <option value="weight-loss">Weight Loss Goal</option>
+            <option value="active">Active / Working Dog</option>
+            <option value="puppy-young">Puppy (0-4 months)</option>
+            <option value="puppy-older">Puppy (4-12 months)</option>
+            <option value="pregnant">Pregnant</option>
+            <option value="lactating">Lactating</option>
+            <option value="senior">Senior</option>
+          </select>
+        </div>
+
+        <button class="btn-calculate" onclick="calculate()">Calculate Calories</button>
+      </div>
+
+      <div class="result-box" id="result">
+        <h3>Calorie Breakdown</h3>
+        <div class="result-value" id="result-cal"></div>
+        <div class="result-detail" id="result-detail"></div>
+      </div>
+
+      <div class="article" style="padding: 2rem 0;">
+        <h2>Understanding RER and MER</h2>
+        <p><strong>RER (Resting Energy Requirement)</strong> is the number of calories your pet needs at complete rest — just to maintain basic body functions like breathing, circulation, and cell repair.</p>
+        <p><strong>Formula: RER = 70 × (weight in kg)<sup>0.75</sup></strong></p>
+        <p><strong>MER (Maintenance Energy Requirement)</strong> is the actual daily calories needed, which factors in activity, life stage, and other variables:</p>
+        <p><strong>Formula: MER = RER × Life Stage Factor</strong></p>
+
+        <h2>Life Stage Multipliers</h2>
+        <table>
+          <tr><th>Life Stage</th><th>Dog Factor</th><th>Cat Factor</th></tr>
+          <tr><td>Neutered adult</td><td>1.6</td><td>1.2</td></tr>
+          <tr><td>Intact adult</td><td>1.8</td><td>1.4</td></tr>
+          <tr><td>Inactive/obese-prone</td><td>1.2-1.4</td><td>1.0</td></tr>
+          <tr><td>Weight loss</td><td>1.0</td><td>0.8</td></tr>
+          <tr><td>Active/working</td><td>2.0-5.0</td><td>1.6</td></tr>
+          <tr><td>Young puppy/kitten</td><td>3.0</td><td>2.5</td></tr>
+          <tr><td>Older puppy/kitten</td><td>2.0</td><td>2.0</td></tr>
+          <tr><td>Pregnant</td><td>1.6-2.0</td><td>1.6-2.0</td></tr>
+          <tr><td>Lactating</td><td>2.0-6.0</td><td>2.0-6.0</td></tr>
+          <tr><td>Senior</td><td>1.2-1.4</td><td>1.1</td></tr>
+        </table>
+
+        <h2>Using Your Results</h2>
+        <p>Once you know your pet's daily calorie needs, divide by the kcal/cup (or kcal/can) listed on your pet food label to determine portion size. Remember:</p>
+        <ul>
+          <li>Treats count! Subtract treat calories from the daily total</li>
+          <li>Monitor weight every 2-4 weeks and adjust by 10% if needed</li>
+          <li>These are starting points — individual pets vary by up to 25%</li>
+        </ul>
+
+        <h2>Related Tools</h2>
+        <ul>
+          <li><a href="/tools/dog-food-calculator.html">Dog Food Calculator</a> — Convert calories to cups</li>
+          <li><a href="/tools/cat-food-calculator.html">Cat Food Calculator</a></li>
+          <li><a href="/tools/pet-bmi-calculator.html">Pet BMI Calculator</a> — Is your pet at ideal weight?</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy Policy</a>
+      </div>
+      <p>&copy; 2024 PetFeedCalc. All rights reserved. Consult your veterinarian for specific dietary advice.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+  <script>
+  function updateStatus() {
+    const petType = document.getElementById('pet-type').value;
+    const statusSelect = document.getElementById('status');
+    if (petType === 'cat') {
+      statusSelect.innerHTML = `
+        <option value="neutered-adult">Neutered/Spayed Adult</option>
+        <option value="intact-adult">Intact Adult</option>
+        <option value="inactive">Indoor / Inactive</option>
+        <option value="weight-loss">Weight Loss Goal</option>
+        <option value="active">Active Outdoor Cat</option>
+        <option value="kitten">Kitten (under 12 months)</option>
+        <option value="pregnant">Pregnant</option>
+        <option value="lactating">Lactating</option>
+        <option value="senior">Senior (10+ years)</option>
+      `;
+    } else {
+      statusSelect.innerHTML = `
+        <option value="neutered-adult">Neutered/Spayed Adult</option>
+        <option value="intact-adult">Intact Adult</option>
+        <option value="inactive">Inactive / Obesity-Prone</option>
+        <option value="weight-loss">Weight Loss Goal</option>
+        <option value="active">Active / Working Dog</option>
+        <option value="puppy-young">Puppy (0-4 months)</option>
+        <option value="puppy-older">Puppy (4-12 months)</option>
+        <option value="pregnant">Pregnant</option>
+        <option value="lactating">Lactating</option>
+        <option value="senior">Senior</option>
+      `;
+    }
+  }
+
+  function calculate() {
+    const petType = document.getElementById('pet-type').value;
+    const weightInput = parseFloat(document.getElementById('weight').value);
+    const unit = document.getElementById('weight-unit').value;
+    const status = document.getElementById('status').value;
+
+    if (!weightInput || weightInput <= 0) {
+      alert('Please enter a valid weight.');
+      return;
+    }
+
+    const weightKg = unit === 'lbs' ? weightInput * 0.453592 : weightInput;
+    const rer = 70 * Math.pow(weightKg, 0.75);
+
+    const factors = {
+      dog: {
+        'neutered-adult': 1.6, 'intact-adult': 1.8, 'inactive': 1.3,
+        'weight-loss': 1.0, 'active': 2.5, 'puppy-young': 3.0,
+        'puppy-older': 2.0, 'pregnant': 1.8, 'lactating': 3.0, 'senior': 1.3
+      },
+      cat: {
+        'neutered-adult': 1.2, 'intact-adult': 1.4, 'inactive': 1.0,
+        'weight-loss': 0.8, 'active': 1.6, 'kitten': 2.5,
+        'pregnant': 1.6, 'lactating': 2.5, 'senior': 1.1
+      }
+    };
+
+    const factor = factors[petType][status] || 1.4;
+    const mer = rer * factor;
+
+    const resultBox = document.getElementById('result');
+    resultBox.classList.add('show');
+    document.getElementById('result-cal').textContent = Math.round(mer) + ' kcal/day';
+    document.getElementById('result-detail').innerHTML =
+      `<strong>RER:</strong> ${Math.round(rer)} kcal (resting energy)<br>` +
+      `<strong>Factor:</strong> ×${factor} (${status.replace(/-/g, ' ')})<br>` +
+      `<strong>MER:</strong> ${Math.round(mer)} kcal (daily needs)<br><br>` +
+      `<em>Divide ${Math.round(mer)} by your food's kcal/cup to get daily cups</em>`;
+  }
+  </script>
+</body>
+</html>

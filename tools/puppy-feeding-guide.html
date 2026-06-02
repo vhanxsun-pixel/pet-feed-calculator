@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puppy Feeding Calculator - How Much to Feed by Age & Weight</title>
+  <meta name="description" content="Free puppy feeding calculator. Get age-specific daily food amounts for your puppy based on current weight, expected adult size, and breed.">
+  <link rel="canonical" href="https://pet-feed-calculator.pages.dev/tools/puppy-feeding-guide.html">
+  <meta property="og:title" content="Puppy Feeding Calculator - Age & Weight Guide">
+  <meta property="og:description" content="Calculate how much food your puppy needs at every growth stage from 8 weeks to 12 months.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Puppy Feeding Calculator",
+    "description": "Calculate how much food your puppy needs based on age and expected adult weight",
+    "url": "https://pet-feed-calculator.pages.dev/tools/puppy-feeding-guide.html",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="navbar-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-1.5 0-3-1.5-3-3 0-1 .5-2 1.5-3S12 13 12 12s-.5-2-1.5-3S9 7 9 6c0-1.5 1.5-3 3-3s3 1.5 3 3c0 1-.5 2-1.5 3S12 11 12 12s.5 2 1.5 3 1.5 2 1.5 3c0 1.5-1.5 3-3 3z"/><circle cx="7" cy="4" r="1.5"/><circle cx="17" cy="4" r="1.5"/><circle cx="5" cy="9" r="1.5"/><circle cx="19" cy="9" r="1.5"/></svg>
+        PetFeedCalc
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/dog-food-calculator.html">Dog Food</a></li>
+        <li><a href="/tools/cat-food-calculator.html">Cat Food</a></li>
+        <li><a href="/tools/pet-bmi-calculator.html">Pet BMI</a></li>
+        <li><a href="/blog/how-much-to-feed-puppy.html">Blog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="calc-container">
+      <h1 style="text-align:center; margin-bottom: 0.5rem;">Puppy Feeding Calculator</h1>
+      <p style="text-align:center; color: var(--text-muted); margin-bottom: 2rem;">Age-specific feeding amounts for growing puppies</p>
+
+      <div class="calc-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="current-weight">Current Weight</label>
+            <input type="number" id="current-weight" placeholder="e.g. 8" min="0.5" max="60" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="weight-unit">Unit</label>
+            <select id="weight-unit">
+              <option value="lbs">lbs</option>
+              <option value="kg">kg</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="age-months">Puppy's Age (months)</label>
+          <select id="age-months">
+            <option value="2">2 months (8 weeks)</option>
+            <option value="3">3 months</option>
+            <option value="4">4 months</option>
+            <option value="5">5 months</option>
+            <option value="6">6 months</option>
+            <option value="7">7 months</option>
+            <option value="8">8 months</option>
+            <option value="9">9 months</option>
+            <option value="10">10 months</option>
+            <option value="11">11 months</option>
+            <option value="12">12 months</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="breed-size">Expected Adult Size</label>
+          <select id="breed-size">
+            <option value="toy">Toy (under 10 lbs / 4.5 kg)</option>
+            <option value="small">Small (10-25 lbs / 4.5-11 kg)</option>
+            <option value="medium" selected>Medium (25-50 lbs / 11-23 kg)</option>
+            <option value="large">Large (50-100 lbs / 23-45 kg)</option>
+            <option value="giant">Giant (100+ lbs / 45+ kg)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="calories">Food Calorie Density (kcal/cup)</label>
+          <input type="number" id="calories" placeholder="e.g. 380" min="200" max="600" value="380">
+          <small style="color: var(--text-muted); display: block; margin-top: 0.25rem;">Puppy food is typically 350-420 kcal/cup</small>
+        </div>
+
+        <button class="btn-calculate" onclick="calculate()">Calculate Feeding Amount</button>
+      </div>
+
+      <div class="result-box" id="result">
+        <h3>Puppy Feeding Recommendation</h3>
+        <div class="result-value" id="result-amount"></div>
+        <div class="result-detail" id="result-detail"></div>
+      </div>
+
+      <div class="article" style="padding: 2rem 0;">
+        <h2>Puppy Feeding Guidelines by Age</h2>
+        <table>
+          <tr><th>Age</th><th>Meals/Day</th><th>% of Adult Food</th></tr>
+          <tr><td>2-3 months</td><td>4</td><td>Puppy-specific formula, 2× RER</td></tr>
+          <tr><td>4-5 months</td><td>3</td><td>Puppy-specific formula, 2× RER</td></tr>
+          <tr><td>6-8 months</td><td>2-3</td><td>Gradually reduce to 1.5× RER</td></tr>
+          <tr><td>9-12 months</td><td>2</td><td>Transition toward adult portions</td></tr>
+        </table>
+
+        <h2>Large Breed vs Small Breed</h2>
+        <p>Large and giant breed puppies need controlled growth to prevent joint problems. They should gain weight more slowly than small breeds and may need puppy food formulated for large breeds (lower calcium, controlled calories).</p>
+        <p>Small breed puppies mature faster (reaching adult size by 9-10 months) and have higher metabolic rates per pound of body weight.</p>
+
+        <h2>When to Switch to Adult Food</h2>
+        <ul>
+          <li><strong>Toy/Small breeds:</strong> 9-12 months</li>
+          <li><strong>Medium breeds:</strong> 12 months</li>
+          <li><strong>Large breeds:</strong> 12-18 months</li>
+          <li><strong>Giant breeds:</strong> 18-24 months</li>
+        </ul>
+
+        <h2>Related Tools</h2>
+        <ul>
+          <li><a href="/tools/dog-food-calculator.html">Adult Dog Food Calculator</a></li>
+          <li><a href="/tools/calorie-calculator.html">Pet Calorie Calculator</a></li>
+          <li><a href="/blog/how-much-to-feed-puppy.html">Complete Puppy Feeding Guide</a></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy Policy</a>
+      </div>
+      <p>&copy; 2024 PetFeedCalc. All rights reserved. Consult your veterinarian for specific dietary advice.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+  <script>
+  function calculate() {
+    const weightInput = parseFloat(document.getElementById('current-weight').value);
+    const unit = document.getElementById('weight-unit').value;
+    const ageMonths = parseInt(document.getElementById('age-months').value);
+    const breedSize = document.getElementById('breed-size').value;
+    const caloriesPerCup = parseFloat(document.getElementById('calories').value) || 380;
+
+    if (!weightInput || weightInput <= 0) {
+      alert('Please enter a valid weight.');
+      return;
+    }
+
+    const weightKg = unit === 'lbs' ? weightInput * 0.453592 : weightInput;
+    const rer = 70 * Math.pow(weightKg, 0.75);
+
+    let multiplier = 2.0;
+    if (ageMonths <= 4) multiplier = 2.5;
+    else if (ageMonths <= 6) multiplier = 2.0;
+    else if (ageMonths <= 9) multiplier = 1.8;
+    else multiplier = 1.6;
+
+    if (breedSize === 'large' || breedSize === 'giant') {
+      multiplier *= 0.9;
+    }
+
+    const dailyCal = rer * multiplier;
+    const cups = dailyCal / caloriesPerCup;
+
+    let mealsPerDay = 2;
+    if (ageMonths <= 3) mealsPerDay = 4;
+    else if (ageMonths <= 5) mealsPerDay = 3;
+    else if (ageMonths <= 8) mealsPerDay = 3;
+    else mealsPerDay = 2;
+
+    const resultBox = document.getElementById('result');
+    resultBox.classList.add('show');
+    document.getElementById('result-amount').textContent = cups.toFixed(1) + ' cups/day';
+
+    let switchAge = '12 months';
+    if (breedSize === 'toy' || breedSize === 'small') switchAge = '9-12 months';
+    else if (breedSize === 'large') switchAge = '12-18 months';
+    else if (breedSize === 'giant') switchAge = '18-24 months';
+
+    document.getElementById('result-detail').innerHTML =
+      `<strong>${Math.round(dailyCal)} kcal/day</strong> needed<br>` +
+      `Feed <strong>${mealsPerDay} meals/day</strong> — ${(cups / mealsPerDay).toFixed(2)} cups per meal<br>` +
+      `Switch to adult food at: ${switchAge}`;
+  }
+  </script>
+</body>
+</html>

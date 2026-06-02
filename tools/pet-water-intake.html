@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Water Intake Calculator - Daily Hydration Needs</title>
+  <meta name="description" content="Calculate how much water your dog or cat should drink daily. Based on body weight, food type, and activity level.">
+  <link rel="canonical" href="https://pet-feed-calculator.pages.dev/tools/pet-water-intake.html">
+  <meta property="og:title" content="Pet Water Intake Calculator">
+  <meta property="og:description" content="Find out how much water your pet needs daily based on weight and diet type.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pet Water Intake Calculator",
+    "description": "Calculate how much water your dog or cat needs daily",
+    "url": "https://pet-feed-calculator.pages.dev/tools/pet-water-intake.html",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="navbar-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-1.5 0-3-1.5-3-3 0-1 .5-2 1.5-3S12 13 12 12s-.5-2-1.5-3S9 7 9 6c0-1.5 1.5-3 3-3s3 1.5 3 3c0 1-.5 2-1.5 3S12 11 12 12s.5 2 1.5 3 1.5 2 1.5 3c0 1.5-1.5 3-3 3z"/><circle cx="7" cy="4" r="1.5"/><circle cx="17" cy="4" r="1.5"/><circle cx="5" cy="9" r="1.5"/><circle cx="19" cy="9" r="1.5"/></svg>
+        PetFeedCalc
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/dog-food-calculator.html">Dog Food</a></li>
+        <li><a href="/tools/cat-food-calculator.html">Cat Food</a></li>
+        <li><a href="/tools/pet-bmi-calculator.html">Pet BMI</a></li>
+        <li><a href="/blog/how-much-to-feed-puppy.html">Blog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="calc-container">
+      <h1 style="text-align:center; margin-bottom: 0.5rem;">Pet Water Intake Calculator</h1>
+      <p style="text-align:center; color: var(--text-muted); margin-bottom: 2rem;">How much water does your pet need daily?</p>
+
+      <div class="calc-form">
+        <div class="form-group">
+          <label for="pet-type">Pet Type</label>
+          <select id="pet-type">
+            <option value="dog" selected>Dog</option>
+            <option value="cat">Cat</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="weight">Pet's Weight</label>
+            <input type="number" id="weight" placeholder="e.g. 30" min="0.5" max="120" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="weight-unit">Unit</label>
+            <select id="weight-unit">
+              <option value="lbs">lbs</option>
+              <option value="kg">kg</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="food-type">Primary Diet</label>
+          <select id="food-type">
+            <option value="dry" selected>Dry food (kibble)</option>
+            <option value="wet">Wet food (canned)</option>
+            <option value="mixed">Mixed (dry + wet)</option>
+            <option value="raw">Raw diet</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="activity">Activity Level</label>
+          <select id="activity">
+            <option value="low">Low</option>
+            <option value="moderate" selected>Moderate</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="weather">Climate / Season</label>
+          <select id="weather">
+            <option value="cool">Cool / Winter</option>
+            <option value="moderate" selected>Moderate</option>
+            <option value="hot">Hot / Summer</option>
+          </select>
+        </div>
+
+        <button class="btn-calculate" onclick="calculate()">Calculate Water Needs</button>
+      </div>
+
+      <div class="result-box" id="result">
+        <h3>Daily Water Recommendation</h3>
+        <div class="result-value" id="result-amount"></div>
+        <div class="result-detail" id="result-detail"></div>
+      </div>
+
+      <div class="article" style="padding: 2rem 0;">
+        <h2>General Water Guidelines</h2>
+        <p>The standard recommendation is:</p>
+        <ul>
+          <li><strong>Dogs:</strong> 1 ounce of water per pound of body weight per day (approximately 50-60 ml/kg)</li>
+          <li><strong>Cats:</strong> 3.5-4.5 ounces per 5 pounds of body weight (approximately 44-66 ml/kg)</li>
+        </ul>
+
+        <h2>Factors That Increase Water Needs</h2>
+        <ul>
+          <li>Dry food diet (only 10% moisture vs 75%+ in wet food)</li>
+          <li>Hot weather or heated indoor environments</li>
+          <li>High activity levels (exercise, play)</li>
+          <li>Nursing mothers (up to 2-3× normal intake)</li>
+          <li>Certain medications (diuretics, steroids)</li>
+        </ul>
+
+        <h2>Signs of Dehydration</h2>
+        <ul>
+          <li>Dry, sticky gums</li>
+          <li>Loss of skin elasticity (skin tent test)</li>
+          <li>Sunken eyes</li>
+          <li>Lethargy</li>
+          <li>Reduced urination</li>
+        </ul>
+
+        <h2>Related Tools</h2>
+        <ul>
+          <li><a href="/tools/dog-food-calculator.html">Dog Food Calculator</a></li>
+          <li><a href="/tools/cat-food-calculator.html">Cat Food Calculator</a></li>
+          <li><a href="/blog/wet-vs-dry-food.html">Wet vs Dry Food Comparison</a></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy Policy</a>
+      </div>
+      <p>&copy; 2024 PetFeedCalc. All rights reserved. Consult your veterinarian for specific advice.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+  <script>
+  function calculate() {
+    const petType = document.getElementById('pet-type').value;
+    const weightInput = parseFloat(document.getElementById('weight').value);
+    const unit = document.getElementById('weight-unit').value;
+    const foodType = document.getElementById('food-type').value;
+    const activity = document.getElementById('activity').value;
+    const weather = document.getElementById('weather').value;
+
+    if (!weightInput || weightInput <= 0) {
+      alert('Please enter a valid weight.');
+      return;
+    }
+
+    const weightKg = unit === 'lbs' ? weightInput * 0.453592 : weightInput;
+    const weightLbs = unit === 'lbs' ? weightInput : weightInput * 2.20462;
+
+    let baseMl;
+    if (petType === 'dog') {
+      baseMl = weightKg * 55;
+    } else {
+      baseMl = weightKg * 50;
+    }
+
+    let foodMultiplier = 1.0;
+    if (foodType === 'dry') foodMultiplier = 1.0;
+    else if (foodType === 'wet') foodMultiplier = 0.5;
+    else if (foodType === 'mixed') foodMultiplier = 0.75;
+    else if (foodType === 'raw') foodMultiplier = 0.6;
+
+    let activityMultiplier = 1.0;
+    if (activity === 'low') activityMultiplier = 0.9;
+    else if (activity === 'high') activityMultiplier = 1.3;
+
+    let weatherMultiplier = 1.0;
+    if (weather === 'cool') weatherMultiplier = 0.9;
+    else if (weather === 'hot') weatherMultiplier = 1.3;
+
+    const totalMl = baseMl * foodMultiplier * activityMultiplier * weatherMultiplier;
+    const oz = totalMl / 29.5735;
+    const cups = totalMl / 236.588;
+
+    const resultBox = document.getElementById('result');
+    resultBox.classList.add('show');
+    document.getElementById('result-amount').textContent = Math.round(totalMl) + ' ml/day';
+    document.getElementById('result-detail').innerHTML =
+      `That's approximately <strong>${oz.toFixed(1)} oz</strong> or <strong>${cups.toFixed(1)} cups</strong> of water per day<br>` +
+      `${foodType === 'wet' ? 'Note: Wet food provides significant moisture, so direct drinking may be less' : 'Ensure fresh water is always available'}<br>` +
+      `${weather === 'hot' ? 'Increase water during hot weather — offer ice cubes as treats!' : ''}`;
+  }
+  </script>
+</body>
+</html>

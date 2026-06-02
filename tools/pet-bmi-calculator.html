@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet BMI Calculator - Check Your Dog or Cat's Body Condition</title>
+  <meta name="description" content="Free pet BMI and body condition score calculator. Find out if your dog or cat is underweight, ideal, overweight, or obese with personalized recommendations.">
+  <link rel="canonical" href="https://pet-feed-calculator.pages.dev/tools/pet-bmi-calculator.html">
+  <meta property="og:title" content="Pet BMI Calculator - Body Condition Score">
+  <meta property="og:description" content="Check if your pet is at a healthy weight with our free BMI calculator.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pet BMI Calculator",
+    "description": "Calculate your pet's body condition score to check if they're at a healthy weight",
+    "url": "https://pet-feed-calculator.pages.dev/tools/pet-bmi-calculator.html",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="navbar-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-1.5 0-3-1.5-3-3 0-1 .5-2 1.5-3S12 13 12 12s-.5-2-1.5-3S9 7 9 6c0-1.5 1.5-3 3-3s3 1.5 3 3c0 1-.5 2-1.5 3S12 11 12 12s.5 2 1.5 3 1.5 2 1.5 3c0 1.5-1.5 3-3 3z"/><circle cx="7" cy="4" r="1.5"/><circle cx="17" cy="4" r="1.5"/><circle cx="5" cy="9" r="1.5"/><circle cx="19" cy="9" r="1.5"/></svg>
+        PetFeedCalc
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/dog-food-calculator.html">Dog Food</a></li>
+        <li><a href="/tools/cat-food-calculator.html">Cat Food</a></li>
+        <li><a href="/tools/pet-bmi-calculator.html" class="active">Pet BMI</a></li>
+        <li><a href="/blog/how-much-to-feed-puppy.html">Blog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="calc-container">
+      <h1 style="text-align:center; margin-bottom: 0.5rem;">Pet BMI Calculator</h1>
+      <p style="text-align:center; color: var(--text-muted); margin-bottom: 2rem;">Check if your pet is at a healthy weight</p>
+
+      <div class="calc-form">
+        <div class="form-group">
+          <label for="pet-type">Pet Type</label>
+          <select id="pet-type" onchange="updateFields()">
+            <option value="dog" selected>Dog</option>
+            <option value="cat">Cat</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="weight">Weight</label>
+            <input type="number" id="weight" placeholder="e.g. 25" min="0.5" max="120" step="0.1">
+          </div>
+          <div class="form-group">
+            <label for="weight-unit">Unit</label>
+            <select id="weight-unit">
+              <option value="lbs">lbs</option>
+              <option value="kg">kg</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" id="breed-group">
+          <label for="breed-size">Breed Size</label>
+          <select id="breed-size">
+            <option value="toy">Toy (Chihuahua, Yorkie) — ideal 2-8 lbs</option>
+            <option value="small">Small (Beagle, Corgi) — ideal 10-25 lbs</option>
+            <option value="medium">Medium (Border Collie, Bulldog) — ideal 25-50 lbs</option>
+            <option value="large">Large (Labrador, Golden) — ideal 55-80 lbs</option>
+            <option value="giant">Giant (Great Dane, Mastiff) — ideal 90-150 lbs</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="body-check">Can you easily feel your pet's ribs?</label>
+          <select id="body-check">
+            <option value="visible">Ribs are visible without touching</option>
+            <option value="easy">Yes, easily felt with light pressure</option>
+            <option value="moderate" selected>Felt with moderate pressure</option>
+            <option value="hard">Hard to feel, covered by fat</option>
+            <option value="impossible">Cannot feel ribs at all</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="waist">Does your pet have a visible waist (viewed from above)?</label>
+          <select id="waist">
+            <option value="pronounced">Very pronounced waist</option>
+            <option value="visible" selected>Visible waist tuck</option>
+            <option value="minimal">Minimal or no waist</option>
+            <option value="none">Rounded/barrel shaped</option>
+          </select>
+        </div>
+
+        <button class="btn-calculate" onclick="calculate()">Check Body Condition</button>
+      </div>
+
+      <div class="result-box" id="result">
+        <h3>Body Condition Assessment</h3>
+        <div class="result-value" id="result-score"></div>
+        <div class="result-detail" id="result-detail"></div>
+      </div>
+
+      <div class="article" style="padding: 2rem 0;">
+        <h2>Understanding Body Condition Score (BCS)</h2>
+        <p>Veterinarians use a 1-9 scale Body Condition Score to assess pet weight:</p>
+        <table>
+          <tr><th>BCS</th><th>Category</th><th>Signs</th></tr>
+          <tr><td>1-3</td><td>Underweight</td><td>Ribs, spine, hip bones easily visible; no fat cover</td></tr>
+          <tr><td>4-5</td><td>Ideal</td><td>Ribs easily felt; visible waist from above; abdominal tuck from side</td></tr>
+          <tr><td>6-7</td><td>Overweight</td><td>Ribs felt with pressure; waist barely visible; slight belly</td></tr>
+          <tr><td>8-9</td><td>Obese</td><td>Ribs not felt; no waist; distended abdomen; fat deposits</td></tr>
+        </table>
+
+        <h2>Why Weight Matters</h2>
+        <ul>
+          <li>Overweight pets have 2.5 years shorter lifespan on average</li>
+          <li>Excess weight increases risk of diabetes, arthritis, and heart disease</li>
+          <li>Even 10-15% above ideal weight is clinically significant</li>
+        </ul>
+
+        <h2>What To Do</h2>
+        <ul>
+          <li><strong>Underweight:</strong> Increase food by 10-20% and consult your vet to rule out health issues</li>
+          <li><strong>Ideal:</strong> Maintain current feeding — you're doing great!</li>
+          <li><strong>Overweight:</strong> Reduce food by 10-15%, increase exercise gradually</li>
+          <li><strong>Obese:</strong> Consult your vet for a weight loss plan — never crash-diet a pet</li>
+        </ul>
+
+        <h2>Related Tools</h2>
+        <ul>
+          <li><a href="/tools/calorie-calculator.html">Calorie Calculator</a> — Find exact daily calorie needs</li>
+          <li><a href="/tools/dog-food-calculator.html">Dog Food Calculator</a></li>
+          <li><a href="/blog/overweight-pet-diet.html">How to Help an Overweight Pet</a></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy.html">Privacy Policy</a>
+      </div>
+      <p>&copy; 2024 PetFeedCalc. All rights reserved. Consult your veterinarian for specific advice.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+  <script>
+  function updateFields() {
+    const petType = document.getElementById('pet-type').value;
+    const breedGroup = document.getElementById('breed-group');
+    if (petType === 'cat') {
+      breedGroup.style.display = 'none';
+    } else {
+      breedGroup.style.display = 'block';
+    }
+  }
+
+  function calculate() {
+    const petType = document.getElementById('pet-type').value;
+    const weightInput = parseFloat(document.getElementById('weight').value);
+    const unit = document.getElementById('weight-unit').value;
+    const bodyCheck = document.getElementById('body-check').value;
+    const waist = document.getElementById('waist').value;
+
+    if (!weightInput || weightInput <= 0) {
+      alert('Please enter a valid weight.');
+      return;
+    }
+
+    let ribScore = 0;
+    if (bodyCheck === 'visible') ribScore = 1;
+    else if (bodyCheck === 'easy') ribScore = 2;
+    else if (bodyCheck === 'moderate') ribScore = 3;
+    else if (bodyCheck === 'hard') ribScore = 4;
+    else ribScore = 5;
+
+    let waistScore = 0;
+    if (waist === 'pronounced') waistScore = 1;
+    else if (waist === 'visible') waistScore = 2;
+    else if (waist === 'minimal') waistScore = 3;
+    else waistScore = 4;
+
+    const avgScore = (ribScore + waistScore) / 2;
+
+    let bcs, category, color, advice;
+    if (avgScore <= 1.5) {
+      bcs = '1-3'; category = 'Underweight'; color = '#f59e0b';
+      advice = 'Your pet may be underweight. Consider gradually increasing food portions by 10-20%. Consult your vet to rule out underlying health issues like parasites or thyroid problems.';
+    } else if (avgScore <= 2.5) {
+      bcs = '4-5'; category = 'Ideal Weight'; color = '#10b981';
+      advice = 'Your pet appears to be at a healthy weight. Maintain your current feeding routine and keep up the good work! Regular weigh-ins every month will help catch any changes early.';
+    } else if (avgScore <= 3.5) {
+      bcs = '6-7'; category = 'Overweight'; color = '#f59e0b';
+      advice = 'Your pet is likely carrying extra weight. Reduce daily food by 10-15% and increase exercise. Cut back on treats (limit to 10% of daily calories). Re-assess in 4-6 weeks.';
+    } else {
+      bcs = '8-9'; category = 'Obese'; color = '#ef4444';
+      advice = 'Your pet is significantly overweight. Please consult your veterinarian for a safe weight-loss plan. Rapid weight loss can be dangerous — aim for 1-2% body weight loss per week.';
+    }
+
+    const resultBox = document.getElementById('result');
+    resultBox.classList.add('show');
+    document.getElementById('result-score').innerHTML = `<span style="color:${color}">${category}</span> (BCS ${bcs}/9)`;
+    document.getElementById('result-detail').innerHTML = advice;
+  }
+  </script>
+</body>
+</html>
