@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://petfeedguide.com/sitemap.xml
+Sitemap: https://petfeedguide.com/sitemap-google.xml
