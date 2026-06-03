@@ -3,6 +3,7 @@ export function onRequest(context) {
 
   if (url.hostname === 'www.petfeedguide.com') {
     url.hostname = 'petfeedguide.com';
+    url.protocol = 'https:';
     return Response.redirect(url.toString(), 301);
   }
 
